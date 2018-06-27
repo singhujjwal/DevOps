@@ -1,0 +1,15 @@
+---
+# Install roles from ansible-galaxy with command 
+# ansible-galaxy install "role-name"
+# e.g. sudo ansible-galaxy install geerlingguy.apache
+# Change configuration in ansible.cfg about where the roles will be installed
+# additional paths to search for roles in, colon separated
+#roles_path    = /etc/ansible/roles
+# you can uninstall roles by running command
+# ansible-galaxy remove "role-name"
+# and run the actual file as a playbook
+# ansible-playbook filename.yml
+- hosts: local
+  become: yes
+  roles:
+  - geerlingguy.apache

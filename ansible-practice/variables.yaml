@@ -1,0 +1,24 @@
+--- # Test structure for ansible yaml
+- hosts: '{{ myhost }}'
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: '{{ gather_facts_dont_use_keyword }}'
+
+  vars:
+    username: mysuser
+    myhost: centos
+    gather_facts_dont_use_keyword: yes
+  tasks:
+  - name: Install HTTP server on Centos 7 Nodes
+    yum:
+      name: httpd
+      state: latest
+    notify:
+    - startservice
+  handlers:
+  - name: startservice
+    service:
+      name: httpd
+      state: restarted
