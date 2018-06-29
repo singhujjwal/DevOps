@@ -15,7 +15,7 @@ module "container" {
 
 resource "null_resource" "null_id" {
   provisioner "local-exec" {
-      command = "echo ${var.container_name} >> container.txt"
+      command = "echo ${lookup(var.container_name, var.env)} >> container.txt"
   }
 }
 
