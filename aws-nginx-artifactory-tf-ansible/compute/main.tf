@@ -33,16 +33,17 @@ resource "aws_instance" "tf_server" {
   subnet_id              = "${element(var.subnets, count.index)}"
 
 
+
   provisioner "local-exec" {
     command = <<EOD
 cat <<EOF > aws_hosts 
 [dev] 
-${aws_instance.tf_server.public_ip} 
+${self.public_ip}
 EOF
 EOD
   }
 
   provisioner "local-exec" {
-    command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.tf_server.id} --profile ${var.aws_profile} && ansible-playbook -i aws_hosts apache.yml"
+    command = "aws ec2 wait instance-status-ok --instance-ids ${self.id} --profile ${var.aws_profile} && ansible-playbook -i aws_hosts apache.yml"
   }
 }
