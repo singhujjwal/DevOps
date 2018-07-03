@@ -38,5 +38,5 @@ module "compute" {
   subnets         = "${module.networking.public_subnets}"
   security_group  = "${module.networking.public_sg}"
   subnet_ips      = "${module.networking.subnet_ips}"
+  aws_profile = "${var.aws_profile}"
 }
-
