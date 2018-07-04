@@ -19,6 +19,16 @@ resource "aws_key_pair" "tf_auth" {
   public_key = "${file(var.public_key_path)}"
 }
 
+resource "null_resource" "host_file" {
+  provisioner "local-exec" {
+    command = <<EOD
+cat <<EOF > aws_hosts
+[dev]
+EOF
+EOD
+  }
+}
+
 resource "aws_instance" "tf_server" {
   count         = "${var.instance_count}"
   instance_type = "${var.instance_type}"
@@ -32,18 +42,12 @@ resource "aws_instance" "tf_server" {
   vpc_security_group_ids = ["${var.security_group}"]
   subnet_id              = "${element(var.subnets, count.index)}"
 
-
-
   provisioner "local-exec" {
-    command = <<EOD
-cat <<EOF > aws_hosts 
-[dev] 
-${self.public_ip}
-EOF
-EOD
+    command = "echo ${self.public_ip} >> aws_hosts"
   }
 
   provisioner "local-exec" {
-    command = "aws ec2 wait instance-status-ok --instance-ids ${self.id} --profile ${var.aws_profile} && ansible-playbook -i aws_hosts apache.yml"
+    command = "aws ec2 wait instance-status-ok --instance-ids ${self.id} --profile ${var.aws_profile} && ansible-playbook -i aws_hosts apache.yml --limit ${self.public_ip}"
   }
+ 
 }
