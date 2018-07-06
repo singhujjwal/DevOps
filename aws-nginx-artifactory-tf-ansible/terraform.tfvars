@@ -11,3 +11,5 @@ key_name = "id_rsa"
 public_key_path = "/home/user/.ssh/id_rsa.pub"
 server_instance_type = "t2.micro" 
 instance_count = 2
+domain_name = "singhjee"
+delegation_set = "N3326SVPTXE90Y"

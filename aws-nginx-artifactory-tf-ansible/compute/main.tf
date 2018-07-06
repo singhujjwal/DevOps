@@ -51,3 +51,6 @@ resource "aws_instance" "tf_server" {
   }
  
 }
+
+
+

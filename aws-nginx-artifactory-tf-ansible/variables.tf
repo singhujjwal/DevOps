@@ -23,3 +23,9 @@ variable "server_instance_type" {}
 variable "instance_count" {
   default = 1
 }
+
+variable "domain_name" {
+  default="singhjee"
+}
+
+variable "delegation_set" {}

@@ -7,3 +7,7 @@ output "server_id" {
 output "server_ip" {
   value = "${join(", ", aws_instance.tf_server.*.public_ip)}"
 }
+
+output "server_ip_list" {
+  value = "${aws_instance.tf_server.*.public_ip}"
+}
