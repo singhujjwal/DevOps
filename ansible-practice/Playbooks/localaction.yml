@@ -1,0 +1,22 @@
+--- #LOCALACTION playbook
+
+- hosts: AWS
+  user: centos
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: no
+  tasks:
+  - name: Ping application server before we install
+    local_action: command ping -c 4 10.134.8.197
+  - name: Install lynx on remote server
+    yum: pkg=lynx state=installed
+# Another way of local action
+- hosts: 127.0.0.1
+  connection: local
+  user: centos
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install Telnet Client
+      yum: pkg=telnet state=latest

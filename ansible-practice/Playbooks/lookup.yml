@@ -1,0 +1,14 @@
+--- #YAML playbook with variables
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: centos
+  gather_facts: yes
+  vars:
+    playbook_type: conditionalexample
+  vars_files:
+    - copyright.yml
+    - webdefaults.yml
+  tasks:
+    - debug: msg="{{ lookup('env', 'HOME') }} is the value listed"

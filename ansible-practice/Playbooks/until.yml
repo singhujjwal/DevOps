@@ -1,0 +1,17 @@
+--- #YAML playbook with variables
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: centos
+  gather_facts: yes
+  tasks:
+    - name: Install nginx web server
+      yum: pkg=nginx state=latest
+    - name: Verify nginx web server
+      shell: systemctl status nginx
+      register: result
+      until: result.stdout.find("active (running)") != -1
+      retries: 5
+      delay: 5
+    - debug: var=result

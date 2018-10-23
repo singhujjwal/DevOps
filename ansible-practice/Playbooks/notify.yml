@@ -1,0 +1,14 @@
+--- #YAML playbook with variables
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: centos
+  gather_facts: yes
+  tasks:
+    - name: Install nginx web server
+      action: yum name=nginx state=absent
+      notify: Restart NGINX
+  handlers:
+    - name: Restart NGINX
+      action: service name=nginx service=restarted

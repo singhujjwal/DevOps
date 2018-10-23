@@ -1,6 +1,6 @@
 --- # Test structure for ansible yaml
-- hosts: centos
-  remote_user: ansible
+- hosts: AWS
+  remote_user: centos
   become: yes
   become_method: sudo
   connection: ssh

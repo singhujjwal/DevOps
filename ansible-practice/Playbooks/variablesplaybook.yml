@@ -1,0 +1,17 @@
+--- #YAML playbook with variables
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: centos
+  gather_facts: yes
+  vars:
+    playbook_version: 0.1b
+  vars_files:
+    - copyright.yml
+    - webdefaults.yml
+  tasks:
+    - name: Install apache web server
+      action: yum name=httpd state=installed
+    - name: Verify the lynx is present
+      action: yum name=lynx state=present

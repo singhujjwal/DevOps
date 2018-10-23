@@ -1,0 +1,19 @@
+--- #YAML playbook with variables
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: centos
+  gather_facts: yes
+  vars:
+    playbook_type: conditionalexample
+  vars_files:
+    - copyright.yml
+    - webdefaults.yml
+  tasks:
+    - name: Install nginx web server
+      command: apt-get -y install nginx
+      when: ansible_os_family == "Debian"
+    - name: Install appropriate to the distribution type
+      command: yum install -y nginx
+      when: ansible_os_family == "RedHat"

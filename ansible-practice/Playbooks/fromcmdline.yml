@@ -1,0 +1,14 @@
+--- #YAML playbook with variables
+- hosts: '{{ host }}'
+  become: yes
+  become_method: sudo
+  connection: ssh
+  user: '{{ user }}'
+  gather_facts: no
+  tasks:
+    - name: Install nginx web server
+      yum: pkg={{ pkg }} state=latest
+      notify: Restart NGINX
+  handlers:
+    - name: Restart NGINX
+      service: name={{ pkg }} state=restarted

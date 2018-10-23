@@ -1,0 +1,15 @@
+--- # Testing loops in ansible
+- hosts: AWS
+  become: yes
+  become_method: sudo
+  user: centos
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: Add a list of users
+      user: name={{ item }} state=absent
+      with_items:
+        - user1
+        - user2
+        - user3
+        - user4
