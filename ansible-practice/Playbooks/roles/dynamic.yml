@@ -1,0 +1,16 @@
+--- # Master playbook for webservers
+- hosts: '{{ h }}'
+  user: centos
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  pre_tasks:
+  - name: When did the ROLE start
+    raw: date > /home/centos/startofrole.log
+  roles:
+    - webservers
+  post_tasks:
+  - name: When did the ROLE end
+    raw: date > /home/centos/endofrole.log
+

@@ -1,0 +1,31 @@
+- name: Install Redhat/CentoOS) Apache Web Server
+  yum: pkg={{ redhat_apache }}  state=latest
+  when: "ansible_os_family =='RedHat'"
+- name: Add a list of software
+  yum: pkg={{ item }} state=latest
+  with_items:
+  - telnet
+  - lynx
+  tags: install_list
+- shell: systemctl status httpd
+  register: result
+  until: result.stdout.find("active (running)") != -1
+  retries: 5
+  delay: 5
+- debug: var=result
+  ignore_errors: yes
+- name: Install Debian/Ubuntu Apache Web server
+  apt: pkg={{ debian_apache }} state=latest
+  when: "ansible_os_family == 'Debian'"
+  ignore_errors: yes
+- name: We want to install telnet
+  debug:
+    msg: "Install Telnet"
+  when: "ansible_os_family == 'RedHat'"
+  notify: InstallTelnet
+- name: log all packages installed on the system
+  command: yum list installed | grep telnet
+  register: installed_result
+  tags: install_result
+- debug: var=result
+- debug: var=installed_result

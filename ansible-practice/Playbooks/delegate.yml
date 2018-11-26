@@ -1,0 +1,12 @@
+--- # DELEGATE TO FUNCTION DEMO
+- hosts: AWS
+  user: centos
+  become: yes
+  become_method: sudo
+  connection: ssh
+  tasks:
+  - name: Run a remote ping on the application server
+    raw: ping -c 4 git.openearth.community > /home/centos/ping.out
+    delegate_to: 127.0.0.1
+  - name: Install a package
+    yum: pkg=lynx state=latest

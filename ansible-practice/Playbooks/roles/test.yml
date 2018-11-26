@@ -1,0 +1,14 @@
+--- #Testng the j2 template module
+- hosts: AWS
+  connection: ssh
+  user: centos
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    userName: centos
+    userPassword: blah
+    connectionType: SFTP
+  tasks:
+    - name: Install the configuration file cuxtomized
+      template: src=test.conf.j2 dest=/home/centos/test.conf owner=centos group=centos mode=750
