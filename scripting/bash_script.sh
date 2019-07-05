@@ -15,12 +15,20 @@ for arg in "$@"
 		echo "The args in the script is $arg"
 		sleep 1
 	done
-sleep 5
+sleep 3
 echo "The below snippet will loop through a directory and list the files"
 # for loop across a list of files
 for file in /tmp/*
 	do
 		echo "The file name is $file and this is also ${file}"
+		echo "There is no difference between \${file} and \$file"
 		sleep 1
+		break
 	done
 
+echo "This is how to set the default parameter"
+defvalue=1
+
+VALUE=${2:-$defvalue}
+
+echo "The argument number two to the script in case not provided is $VALUE"
