@@ -28,3 +28,11 @@ pick 9b50b08 uff
 
 
 replace `pick` with `fixup` or `suqash` word 
+
+##  Another trick to squash all unpushed commits into one 
+Comes to start of the branch where none is committed
+git reset origin/dev
+git add --all
+git commit -m 'my commit message'
+
+[Not Tested]
