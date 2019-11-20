@@ -26,3 +26,5 @@ pick e1a4b81 2
 pick 5aaa804 3
 pick 9b50b08 uff
 
+
+replace `pick` with `fixup` or `suqash` word 
